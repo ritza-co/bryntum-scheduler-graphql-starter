@@ -67,7 +67,7 @@ export default function Scheduler({ schedulerRef }: SchedulerProps) {
         }
       }
       if (action === "remove") {
-        if (records[0].data.id.startsWith("_generatedClassDefEx_")) return;
+        if (records[0].data.id.startsWith("_generated")) return;
         records.forEach((record) => {
           deleteResource({
             variables: {
@@ -78,7 +78,7 @@ export default function Scheduler({ schedulerRef }: SchedulerProps) {
       }
       if (action === "update") {
         for (let i = 0; i < records.length; i++) {
-          if (records[i].data.id.startsWith("_generatedClassDefEx_")) return;
+          if (records[i].data.id.startsWith("_generated")) return;
           const modifiedVariables = records[i].meta
             .modified as Partial<Resources>;
           (Object.keys(modifiedVariables) as Array<keyof Resources>).forEach(
@@ -98,7 +98,7 @@ export default function Scheduler({ schedulerRef }: SchedulerProps) {
     if (storeId === "events") {
       if (action === "remove") {
         records.forEach((record) => {
-          if (record.data.id.startsWith("_generatedClassDefEx_")) return;
+          if (record.data.id.startsWith("_generated")) return;
           deleteEvent({
             variables: {
               id: record.data.id,
@@ -109,7 +109,7 @@ export default function Scheduler({ schedulerRef }: SchedulerProps) {
       if (action === "update") {
         for (let i = 0; i < records.length; i++) {
           // update event occuring for newly created event
-          if (records[i].data.id.startsWith("_generatedClassDefEx_")) {
+          if (records[i].data.id.startsWith("_generated")) {
             if (disableCreate) return;
             const { exceptionDates, ...newEventData } = records[i].data;
             createEventDebounced({
